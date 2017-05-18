@@ -193,7 +193,43 @@ void kurbatovdi::lab5()
  */
 void kurbatovdi::lab6()
 {
+	double eps = 1E-8;
+    double *y = new double[N];
+    double norm = 0;
+    double var = 0;
 
+    do
+    {
+        for (int i = 0; i < N; i++)
+		{
+            y[i] = x[i];
+		}
+
+        for (int i = 0; i < N; i++)
+        {
+            var = 0;
+            norm = 0;
+            for (int j = 0; j < i; j++)
+			{
+                var += (A[i][j] * x[j]);
+			}
+
+            for (int j = i + 1; j < N; j++)
+			{
+                var += (A[i][j] * x[j]);
+			}
+
+            x[i] = (b[i] - var) / A[i][i];
+
+            for (int i = 0; i < N; i++)
+			{
+                norm += (x[i] - y[i]) * (x[i] - y[i]);
+			}
+        }
+    }
+	while (sqrt(norm) >= eps);
+
+    delete[] y;
 }
 
 
